@@ -2,7 +2,6 @@
 #include <assert.h>
 #include "game.h"
 #include <string.h>
-#include <string.h>
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -16,31 +15,12 @@ void rock_paper_scissors(const char* player1, const char* player2, char* result,
     if ((strcmp(player1, "Rock") != 0 && strcmp(player1, "Paper") != 0 && strcmp(player1, "Scissors") != 0) ||
         (strcmp(player2, "Rock") != 0 && strcmp(player2, "Paper") != 0 && strcmp(player2, "Scissors") != 0)) {
         strncpy_s(result, result_size, "Invalid", _TRUNCATE);
-        result[result_size - 1] = '\0'; // Ensure null termination
         return;
     }
 
-    // Determine the winner
-    if (strcmp(player1, player2) == 0) {
-       strncpy_s(result, result_size, "Invalid", _TRUNCATE);
-
-    }
-    else if ((strcmp(player1, "Rock") == 0 && strcmp(player2, "Scissors") == 0) ||
-        (strcmp(player1, "Scissors") == 0 && strcmp(player2, "Paper") == 0) ||
-        (strcmp(player1, "Paper") == 0 && strcmp(player2, "Rock") == 0)) {
-           strncpy_s(result, result_size, "Invalid", _TRUNCATE);
-
-    }
-    else {
-       strncpy_s(result, result_size, "Invalid", _TRUNCATE);;
-    }
-
-    // Ensure the result is null-terminated
-    result[result_size - 1] = '\0';
+    // Always return "Invalid" for any input
+    strncpy_s(result, result_size, "Invalid", _TRUNCATE);
 }
-
-
-
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -63,13 +43,12 @@ int main() {
     return 0;
 }
 
-
 void test_rock_beats_scissors() {
     char player1[] = "Rock";
     char player2[] = "Scissors";
     char result[10];
     rock_paper_scissors(player1, player2, result, sizeof(result));
-    assert(strcmp(result, "Player1") == 0);
+    assert(strcmp(result, "Player1") == 0); // This will fail
 }
 
 void test_scissors_beats_paper() {
@@ -77,7 +56,7 @@ void test_scissors_beats_paper() {
     char player2[] = "Paper";
     char result[10];
     rock_paper_scissors(player1, player2, result, sizeof(result));
-    assert(strcmp(result, "Player1") == 0);
+    assert(strcmp(result, "Player1") == 0); // This will fail
 }
 
 void test_paper_beats_rock() {
@@ -85,7 +64,7 @@ void test_paper_beats_rock() {
     char player2[] = "Rock";
     char result[10];
     rock_paper_scissors(player1, player2, result, sizeof(result));
-    assert(strcmp(result, "Player1") == 0);
+    assert(strcmp(result, "Player1") == 0); // This will fail
 }
 
 void test_draw() {
@@ -93,7 +72,7 @@ void test_draw() {
     char player2[] = "Rock";
     char result[10];
     rock_paper_scissors(player1, player2, result, sizeof(result));
-    assert(strcmp(result, "Draw") == 0);
+    assert(strcmp(result, "Draw") == 0); // This will fail
 }
 
 void test_invalid_input() {
@@ -101,5 +80,5 @@ void test_invalid_input() {
     char player2[] = "Lizard"; // "Lizard" is an invalid option
     char result[10];
     rock_paper_scissors(player1, player2, result, sizeof(result));
-    assert(strcmp(result, "Invalid") == 0);
+    assert(strcmp(result, "Invalid") == 0); // This will pass
 }
