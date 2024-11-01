@@ -4,11 +4,37 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-//extern "C" void rock_paper_scissors(const char* player1, const char* player2, char* result, size_t result_size);
+extern "C" void rock_paper_scissors(const char* player1, const char* player2, char* result, size_t result_size);
 
-void rock_paper_scissors(const char* player1, const char* player2, char* result, size_t result_size);
-void rock_paper_scissors(const char* player1, const char* player2, char* result, size_t result_size){}
-    
+void rock_paper_scissors(const char* player1, const char* player2, char* result, size_t result_size) {
+    // Ensure the result is null-terminated
+    if (result_size > 0) {
+        result[0] = '\0';
+    }
+
+    // Check for invalid inputs
+    if ((strcmp(player1, "Rock") != 0 && strcmp(player1, "Paper") != 0 && strcmp(player1, "Scissors") != 0) ||
+        (strcmp(player2, "Rock") != 0 && strcmp(player2, "Paper") != 0 && strcmp(player2, "Scissors") != 0)) {
+        strncpy_s(result, result_size, "Invalid", _TRUNCATE);
+        return;
+    }
+
+    // Determine the winner
+    if (strcmp(player1, player2) == 0) {
+        strncpy_s(result, result_size, "Draw", _TRUNCATE);
+    }
+    else if ((strcmp(player1, "Rock") == 0 && strcmp(player2, "Scissors") == 0) ||
+        (strcmp(player1, "Scissors") == 0 && strcmp(player2, "Paper") == 0) ||
+        (strcmp(player1, "Paper") == 0 && strcmp(player2, "Rock") == 0)) {
+        strncpy_s(result, result_size, "Player1", _TRUNCATE);
+    }
+    else {
+        strncpy_s(result, result_size, "Player2", _TRUNCATE);
+    }
+
+    // Ensure the result is null-terminated
+    result[result_size - 1] = '\0';
+}
 
 namespace testrockpaperscissors
 {
